@@ -1,0 +1,26 @@
+# 🔐 Archivos sensibles que no deben ir en la imagen
+.env
+talana-gcp-credentials.json
+
+# 🗃️ Archivos generados durante la ejecución (NDJSON, logs, salidas)
+*.ndjson
+*.log
+
+# 🧠 Archivos de cache de Python
+__pycache__/
+*.pyc
+*.pyo
+
+# 🛠️ Herramientas y archivos temporales
+*.zip
+git-filter-repo.py
+personas_output.ndjson
+
+# ⚙️ Configuración de editores y sistemas
+.DS_Store
+.vscode/
+.idea/
+
+# 📂 Control de versiones (no necesario dentro del contenedor)
+.git
+.gitignore
