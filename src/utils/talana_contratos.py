@@ -38,10 +38,7 @@ def main(data=None, context=None):
     last_year, last_month = get_last_month()
 
     endpoints = [
-        # Contratos resumidos
         ("https://talana.com/es/api/contracts-resumed", "contracts_resumed_output.ndjson", "ContratoResumen.ndjson"),
-        # Puedes habilitar estos endpoints si decides usarlos más adelante:
-        ("https://talana.com/es/api/remuneraciones/contract", "remuneraciones_contract_output.ndjson", "Contratos.ndjson"),
         ("https://talana.com/es/api/contrato/?show=all", "remuneraciones_contract_output2.ndjson", "Contratos2.ndjson"),
         ("https://talana.com/es/api/contrato-paginado", "contrato_paginado_output.ndjson", "ContratoPaginado.ndjson")
     ]
