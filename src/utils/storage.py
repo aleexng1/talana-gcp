@@ -1,8 +1,8 @@
 import json
 from google.cloud import storage
 
-from src.config import GCP_PROJECT_ID, logger
-from src.utils.sanitize import remove_user_defined_fields
+from config import GCP_PROJECT_ID, logger
+from utils.sanitize import remove_user_defined_fields
 
 
 def write_to_ndjson(data: list, filename: str) -> None:

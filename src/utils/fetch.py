@@ -2,7 +2,7 @@ import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
-from src.config import logger
+from config import logger
 
 def get_session_with_retries() -> requests.Session:
     """

@@ -1,5 +1,5 @@
-from src.utils.fetch import get_session_with_retries
-from src.config import logger
+from utils.fetch import get_session_with_retries
+from config import logger
 
 import requests
 

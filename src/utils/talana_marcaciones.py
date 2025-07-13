@@ -1,8 +1,8 @@
-from src.config import TALANA_USERNAME, TALANA_PASSWORD, GCP_BUCKET_NAME, logger
-from src.utils.auth import get_auth_token
-from src.utils.fetch import fetch_data
-from src.utils.storage import write_to_ndjson, upload_to_gcs
-from src.utils.dates import get_yesterday_date
+from config import TALANA_USERNAME, TALANA_PASSWORD, GCP_BUCKET_NAME, logger
+from utils.auth import get_auth_token
+from utils.fetch import fetch_data
+from utils.storage import write_to_ndjson, upload_to_gcs
+from utils.dates import get_yesterday_date
 
 
 def process_data(url: str, output_filename: str, remote_filename: str):

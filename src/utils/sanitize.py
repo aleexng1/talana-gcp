@@ -1,7 +1,7 @@
 import re
 import unicodedata
 
-from src.config import logger
+from config import logger
 
 
 def sanitize_field_name(name: str) -> str:

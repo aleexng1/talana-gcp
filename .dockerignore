@@ -5,6 +5,7 @@ talana-gcp-credentials.json
 # 🗃️ Archivos generados durante la ejecución (NDJSON, logs, salidas)
 *.ndjson
 *.log
+*.json
 
 # 🧠 Archivos de cache de Python
 __pycache__/
@@ -13,6 +14,12 @@ __pycache__/
 
 # 🛠️ Herramientas y archivos temporales
 *.zip
+*.tar
+*.gz
+*.rar
+*.7z
+*.bak
+*.tmp
 git-filter-repo.py
 personas_output.ndjson
 
@@ -24,3 +31,4 @@ personas_output.ndjson
 # 📂 Control de versiones (no necesario dentro del contenedor)
 .git
 .gitignore
+.gcloudignore
