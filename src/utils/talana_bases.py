@@ -61,7 +61,10 @@ def main(data=None, context=None):
         ("https://talana.com/es/api/rotativeDay", "rotary_output.ndjson", "TurnosRotativos.ndjson"),
         ("https://talana.com/es/api/workShift/", "work_shift_output.ndjson", "Turnos.ndjson"),
         ("https://talana.com/es/api/enrolments", "enrolamiento_output.ndjson", "Enrolamiento.ndjson"),
-        ("https://talana.com/es/api/persona", "personas_output.ndjson", "Personas.ndjson")
+        ("https://talana.com/es/api/persona", "personas_output.ndjson", "Personas.ndjson"),
+        ("https://talana.com/es/api/workedDays", "worked_days_output.ndjson", "DiasTrabajados.ndjson"),
+        ("https://talana.com/es/api/tiposItemsLiquidacion/", "tipos_items_liquidacion_output.ndjson", "TiposItemsLiquidacion.ndjson"),
+        ("https://talana.com/es/api/payroll-parameters/", "payroll_parameters_output.ndjson", "ParametrosLiquidacion.ndjson")
     ]
 
     for url, output_filename, remote_filename in endpoints:
