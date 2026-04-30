@@ -1,3 +1,5 @@
+import time
+
 import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
@@ -39,29 +41,49 @@ def fetch_data(url: str, token: str) -> list:
     session = get_session_with_retries()
 
     while url:
-        try:
-            logger.info(f"Obteniendo datos desde: {url}")
-            response = session.get(
-                url,
-                headers={"Authorization": f"Token {token}"},
-                timeout=500  # Aumentado para endpoints pesados
-            )
-            response.raise_for_status()
-            data = response.json()
+        intentos_429 = 0
+        while intentos_429 < 3:
+            try:
+                logger.info(f"Obteniendo datos desde: {url}")
+                response = session.get(
+                    url,
+                    headers={"Authorization": f"Token {token}"},
+                    timeout=500  # Aumentado para endpoints pesados
+                )
 
-            if isinstance(data, list):
-                results.extend(data)
-                break
-            elif 'results' in data:
-                results.extend(data.get('results', []))
-                url = data.get('next')
-            else:
-                logger.warning(f"Estructura de datos inesperada desde {url}. Respuesta parcial: {str(data)[:500]}")
-                break
+                # Manejo explícito de Rate Limiting
+                if response.status_code == 429:
+                    retry_after = int(response.headers.get("Retry-After", 60))
+                    logger.warning(f"HTTP 429 detectado. Esperando {retry_after}s antes de reintentar (Intento {intentos_429 + 1}/3)...")
+                    time.sleep(retry_after)
+                    intentos_429 += 1
+                    continue
 
-        except requests.RequestException as e:
-            logger.error(f"Error al obtener datos desde {url}: {e}")
-            break
+                response.raise_for_status()
+                data = response.json()
+
+                # Extracción de datos
+                if isinstance(data, list):
+                    results.extend(data)
+                    url = None
+                elif 'results' in data:
+                    results.extend(data.get('results', []))
+                    url = data.get('next')
+                else:
+                    logger.warning(f"Estructura de datos inesperada desde {url}. Respuesta parcial: {str(data)[:500]}")
+                    url = None
+
+                # Pausa obligatoria entre páginas (Throttle)
+                time.sleep(1.0)
+                break  # Salir del bucle de reintentos 429 y pasar a la siguiente página
+
+            except requests.RequestException as e:
+                logger.error(f"Error fatal al obtener datos desde {url}: {e}")
+                raise e
+        else:
+            # Si agota los 3 reintentos de 429
+            logger.error(f"Se agotaron los reintentos para manejar el error 429 en {url}")
+            raise requests.exceptions.HTTPError("Max retries for HTTP 429 reached.", response=response)
 
     logger.info(f"Total de registros obtenidos: {len(results)}")
     return results
